@@ -1,0 +1,22 @@
+[
+    { 
+        "category": "BIRYANI",
+        "slug":"BIRYANI"
+    },
+    {
+        "category":"STARTERS VEGETARIAN",
+        "slug":"STARTERS VEGETARIAN"
+    },
+    {
+        "category":"PLATTER",
+        "slug":"PLATTER"
+    },
+    {
+        "category":"STARTER NON-VEGETARIAN",
+        "slug":"STARTER NON-VEGETARIAN"
+    },
+    {
+        "category":"VEGETABLES MAIN COURSE",
+        "slug":"VEGETABLES MAIN COURSE"
+    }
+]

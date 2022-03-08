@@ -1,0 +1,101 @@
+<%- include('../includes/header.ejs') %> 
+
+<!-- Begin Site Title
+================================================== -->
+<div class="container">
+	<div class="banner">
+		<img src="/assets/img/default-img.jpg" width="100%">
+	</div>
+<!-- End Site Title
+================================================== -->
+
+	<!-- Begin Featured
+	================================================== -->
+	<section class="featured-posts">
+		<div class="row">
+
+			<div class="col-md-12">
+
+				<div class="scrollmenu">
+					<% let counter=1; %>
+					<% for(let cat of category) {%>
+						<% if (familyPack.length > 0) { %>
+						<a href="#<%= counter++ %>"><%= cat %></a>					
+					<% } %>
+					<% } %>
+				  </div>
+			 
+			</div>
+			</div>
+		
+			<div class="row">
+
+<div class="col-md-12">
+
+	<div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
+		<% let product_count=1; %> 
+		<% for(let cat of category) {%>
+		
+		<div class="page-section" id="<%= product_count++ %>">
+		<h5><%= cat %></h5>
+		<div class="row">
+			<% for (let fmly of familyPack) { %>
+			<% if (cat === fmly.category) { %>
+			<div class="col-sm-6">
+			  <div class="card">
+
+				<div class="card-body p-3">					
+					<!-- <img src="/assets/img/products/dish1.jpg" alt="" class="img-responsive"> -->
+				<h5 class="card-title"><%= fmly.itemName %></h5>
+				  <p class="card-text"><%= fmly.description %></p>
+				<h6 class="price">$<%= fmly.price %></h6>
+				<% if (fmly.vegetarian === true) { %><div class="veg"></div><%  } else { %><div class="non-veg"></div><% } %>
+				<div class="action_btn"><a href = "javascript:void(0);" data-pizza="<%= JSON.stringify(fmly) %>" class="add-to-card btn btn-white btn-default">Add To Cart</a></div>
+				</div>
+			  </div>
+			</div>
+			<% } %>
+			<% } %>
+		  </div>		  
+		</div>		
+		<% } %>
+	  </div>
+</div>
+
+
+
+
+
+
+
+
+</div>
+	</section>
+	<!-- End Featured
+	================================================== -->
+
+	
+
+	<!-- Begin Footer
+	================================================== -->
+
+</div>
+
+<!-- /.container -->
+<style>
+	.veg {
+		background: green;
+		height: 1rem;
+		width: 1rem;
+		margin: 1rem 0;
+		border-radius: 50%;
+	}
+	.non-veg {
+		background:red;
+		height: 1rem;
+		width: 1rem;
+		margin: 1rem 0;
+		border-radius: 50%;
+	}
+</style>
+<%- include('../includes/footer.ejs') %>

@@ -1,0 +1,75 @@
+[
+    { 
+        "category": "FAMILY PACK",
+        "slug":"FAMILY PACK"
+    },
+    {
+        "category":"STARTERS VEGETARIAN",
+        "slug":"STARTER VEGETARIAN"
+    },
+    {
+        "category":"STARTER NON-VEGETARIAN",
+        "slug":"STARTER NON-VEGETARIAN"
+    },
+    {
+        "category":"PLATTERS",
+        "slug":"PLATTERS"
+    },
+    {
+        "category":"CHEF'S SPECIAL",
+        "slug":"CHEF'S SPECIAL"
+    },
+    {
+        "category":"VEGETABLES MAIN COURSE",
+        "slug":"VEGETABLES MAIN COURSE"
+    },
+    {
+        "category":"CHICKEN MAIN COURSE",
+        "slug":"CHICKEN MAIN COURSE"
+    },
+    {
+        "category":"LAMB MAIN COURSE",
+        "slug":"LAMB MAIN COURSE"
+    },
+    {
+        "category":"BEEF MAIN COURSE",
+        "slug":"BEEF MAIN COURSE"
+    },
+    {
+        "category":"SEAFOOD MAIN COURSE",
+        "slug":"SEAFOOD MAIN COURSE"
+    },
+    {
+        "category":"VEGAN",
+        "slug":"VEGAN"
+    },
+    {
+        "category":"KIDS MENU",
+        "slug":"KIDS MENU"
+    },
+    {
+        "category":"BIRYANI",
+        "slug":"BIRYANI"
+    },
+    {
+        "category":"RICE",
+        "slug":"RICE"
+    },
+    {
+        "category":"SALADS",
+        "slug":"SALADS"
+    },
+    {
+  	"category":"NAAN BREADS",
+        "slug":"NAAN BREADS"
+    },
+    {
+        "category":"DESSERT",
+        "slug":"DESSERT"
+    },
+    {
+        "category":"DRINKS",
+        "slug":"DRINKS"
+    }
+]
+

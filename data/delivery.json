@@ -1,0 +1,12 @@
+[
+    {
+        "name":"Minimum Order $0",
+            "areas":[
+                {
+                    "area":"BYFORD",
+                    "price": 0,
+                    "pincode":"6122"
+                }
+            ]
+    }
+]
