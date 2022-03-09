@@ -50,7 +50,7 @@
 				  <p class="card-text"><%= fmly.description %></p>
 				<h6 class="price">$<%= fmly.price %></h6>
 				<% if (fmly.vegetarian === true) { %><div class="veg">Veg</div><%  } else { %><div class="non-veg">Non-Veg</div><% } %>
-				<div class="action_btn"><a href = "javascript:void(0);" data-pizza="<%= JSON.stringify(fmly) %>" class="add-to-card btn btn-white btn-default">Add To Cart</a></div>
+				<div class="action_btn"><a href = "javascript:void(0);" data-pizza="<%= JSON.stringify(fmly) %>" class="add-to-card btn btn-white btn-default">Add An Item</a></div>
 				</div>
 			  </div>
 			</div>
@@ -87,7 +87,7 @@
 		background: green;
 		display: inline-block;
 		height: 2rem;
-		width: 9.2rem;
+		width: 3rem;
 		margin: 1rem 0;
 		text-align: center;
 		color: #fff;
@@ -97,7 +97,7 @@
 		background: red;
 		display: inline-block;
 		height: 2rem;
-		width: 9.2rem;
+		width: 5rem;
 		margin: 1rem 0;
 		text-align: center;
 		color: #fff;
