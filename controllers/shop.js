@@ -14,7 +14,7 @@ const Category = require('../models/category');
 const firestore = firebase.firestore();
 const firebase1 = require('firebase');
 const { check, validationResult } = require('express-validator');
-const stripe = require('stripe')('sk_test_51IPNeKFk1sSnNf4DkRZGbskzdeEvFihcGoP65Pyo96Zk791WEeahF7HNG875upr6mZ7yCvCgiR3bxeGKqd01I8Jr00Idp4MbEJ');
+const stripe = require('stripe')('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');
 const store = require('store');
 
 
@@ -362,7 +362,7 @@ const postContact = async (req, res, next) => {
 };
 
 const privacy = async(req, res, next) => {
-    res.render('shop/privacy', { pageTitle: 'Indian Flavours Byford Privacy Policy', path: '/shop', name: '' })
+    res.render('shop/privacy', { pageTitle: 'Tandoori Bistro Privacy Policy', path: '/shop', name: '' })
 };
 
 const postBooking = async (req, res, next) => {

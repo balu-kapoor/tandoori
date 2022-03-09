@@ -677,7 +677,7 @@ a.btn.btn-default {
     background: #f18240;
     color: #fff;
     text-transform: uppercase;
-    padding: 14px 24px;
+    padding: 9px 24px;
 }
 
 .cart_totals {
@@ -791,6 +791,8 @@ div.scrollmenu {
     top: 80px;
     width: 100%;
 	z-index: 999;
+	display: flex;
+    justify-content: center;
   }
   
   div.scrollmenu a {
@@ -1201,7 +1203,7 @@ form .rounded-pill{
 }
 @media only screen and (min-width: 768px) {
 	.scrollmenu {
-		left: 2rem;
+		left: 0;
 	}
 }
 @media only screen and (max-width: 768px) {
@@ -1540,4 +1542,13 @@ form .rounded-pill{
 
 .noty_theme__relax.noty_type__success .noty_buttons {
   border-color: #fa721a;
+}
+.privacy__policy {
+	display: block;
+    text-align: center;
+    padding: 5px 0;
+}
+.orange-btn {
+    background: #fa721a;
+    color: #fff;
 }

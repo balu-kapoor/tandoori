@@ -7,5 +7,5 @@ $(function(){
       else{
         $(".share").show();
       }
-  });
+  });    
 });

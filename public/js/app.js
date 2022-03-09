@@ -26754,16 +26754,9 @@ getdelivery  =  function(e, val) {
         
     
      }
-
-    
-    
      
     // Booking Form
     
-    
-
-    
-
     var statuses = document.querySelectorAll('.status_line');
     var hiddenInput = document.querySelector('#hiddenInput');
     var order = hiddenInput ? hiddenInput.value : null;
@@ -26797,7 +26790,27 @@ getdelivery  =  function(e, val) {
     
     updateStatus(order); // Socket
     
-    
+    // smooth scroll
+    // handle links with @href started with '#' only
+// $(document).on('click', '.scrollmenu a[href^="#"]', function(e) {
+//     // target element id
+//     var id = $(this).attr('href');
+//     var height = $('.scrollmenu').offset().top;
+//     // target element
+//     var $id = $(id);
+//     if ($id.length === 0) {
+//         return;
+//     }
+  
+//     // prevent standard hash navigation (avoid blinking in IE)
+//     e.preventDefault();
+  
+//     // top position relative to the document
+//     var pos = $id.offset().top + height;
+  
+//     // animated top scrolling
+//     $('body, html').animate({scrollTop: pos});
+//   });
     /***/ }),
     
     /***/ "./resources/scss/app.scss":
