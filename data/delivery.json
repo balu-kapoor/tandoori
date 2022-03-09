@@ -1,11 +1,51 @@
 [
     {
-        "name":"Minimum Order $0",
+        "name":"Minimum Order $50",
             "areas":[
                 {
-                    "area":"BYFORD",
-                    "price": 0,
-                    "pincode":"6122"
+                    "area":"Baskerville",
+                    "price": 5,
+                    "pincode":"6056"
+                },
+                {
+                    "area":"Millendon",
+                    "price": 5,
+                    "pincode":"6056"
+                },
+                {
+                    "area":"Hernehill",
+                    "price": 5,
+                    "pincode":"6056"
+                }
+            ]
+    },
+    {
+        "name":"Minimum Order $50",
+            "areas":[
+                {
+                    "area":"Ellen brook",
+                    "price": 10,
+                    "pincode":"6069"
+                },
+                {
+                    "area":"The vines",
+                    "price": 10,
+                    "pincode":"6069"
+                },
+                {
+                    "area":"Henley brook",
+                    "price": 10,
+                    "pincode":"6055"
+                },
+                {
+                    "area":"Aveley",
+                    "price": 10,
+                    "pincode":"6069"
+                },
+                {
+                    "area":"Middle swan",
+                    "price": 10,
+                    "pincode":"6056"
                 }
             ]
     }
