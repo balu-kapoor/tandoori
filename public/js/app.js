@@ -26791,26 +26791,20 @@ getdelivery  =  function(e, val) {
     updateStatus(order); // Socket
     
     // smooth scroll
-    // handle links with @href started with '#' only
-// $(document).on('click', '.scrollmenu a[href^="#"]', function(e) {
-//     // target element id
-//     var id = $(this).attr('href');
-//     var height = $('.scrollmenu').offset().top;
-//     // target element
-//     var $id = $(id);
-//     if ($id.length === 0) {
-//         return;
-//     }
-  
-//     // prevent standard hash navigation (avoid blinking in IE)
-//     e.preventDefault();
-  
-//     // top position relative to the document
-//     var pos = $id.offset().top + height;
-  
-//     // animated top scrolling
-//     $('body, html').animate({scrollTop: pos});
-//   });
+    $('a[href*="#"]:not([href="#"])').click(function() {
+        var target = $(this.hash);
+            $('html,body').stop().animate({
+            scrollTop: target.offset().top - 180
+            }, 'linear');   
+    });    
+        if (location.hash){
+        var id = $(location.hash);
+        }
+        $(window).on('load', function() {
+        if (location.hash){
+            $('html,body').animate({scrollTop: id.offset().top -180}, 'linear')
+        };
+        });
     /***/ }),
     
     /***/ "./resources/scss/app.scss":

@@ -1,10 +1,16 @@
+const store = require('store');
+
 function cartController() { 
 	return {
 		index(req, res) {
 			if(!req.session.cart) {
 				return res.redirect('/menu');
 			}
-			res.render('shop/cart',{ pageTitle: 'Shopping Cart Detail',path: '/cart',});
+			let table_number = null;
+			if(store.get('tableNumber')) {
+				table_number = store.get('tableNumber');
+			}
+			res.render('shop/cart',{ pageTitle: 'Shopping Cart Detail',path: '/cart', table_number: table_number});
 		},
 		update(req, res) {
 			const { id, price } = req.body;

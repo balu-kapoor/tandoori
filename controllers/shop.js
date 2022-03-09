@@ -17,7 +17,6 @@ const { check, validationResult } = require('express-validator');
 const stripe = require('stripe')('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');
 const store = require('store');
 
-
 const getIndex = async (req, res, next) => {
     res.render('shop/index', {
         pageTitle: 'Tandoori Bistro',
@@ -26,7 +25,7 @@ const getIndex = async (req, res, next) => {
 };
 
 const getAllItems = async (req, res, next) => {
-
+    store.clearAll()
     try {
         const items = await firestore.collection('items');
         const familyPack = await items.get();
@@ -170,6 +169,20 @@ const getCheckout = async(req, res, next) => {
     res.render('shop/checkout', { delivery: delivery, pageTitle: 'Tandoori Bistro Checkout', path: '/cart', name: 'Edward' })
 };
 
+const getTableCheckout = async(req, res, next) => {
+    if(!req.session.cart) {
+        return res.redirect('/menu');
+    }else if(req.session.cart && Object.values(req.session.cart.items) ==0){
+        return res.redirect('/menu');
+    }
+    const { cart } = req.session;
+    let table_number = null;
+    if(store.get('tableNumber')) {
+        table_number = store.get('tableNumber');
+    }
+    res.render('shop/checkout2', { delivery: delivery, pageTitle: 'Tandoori Bistro Checkout', path: '/cart', name: 'Edward', table_number})
+};
+
 const orderConfirm = async(req, res, next) => {
     delete req.session.cart;
     res.render('shop/confirm', { cart: Cart.getCart(), pageTitle: 'Tandoori Bistro Confirm', path: '/shop', name: '' })
@@ -242,6 +255,7 @@ let deliveryAmount = 0;
             status: 'NEW BOOKING',
             tableNumber:table_number
         })
+        store.clearAll()
 
         let orderItemEntity = {};
         for(let productId of Object.values(req.session.cart.items)) {					
@@ -259,6 +273,61 @@ orderItemEntity['totalPrice'] = ParseFloat(productId.item.price * productId.qty,
            firestore.collection("orderitems").add(orderItemEntity)
         }
         await firestore.collection('users').doc(id).delete();
+
+        // send email to customer
+					let msg = `<h2>Your Order Invoice</h2>
+					<h4>ABN NO: 50614499222</h4>
+					<table border="1" style="border-collapse:collapse;width:100%">
+					<tr>
+						<th>Item Name</th>
+						<th>Price</th>
+						<th>Quantity</th>
+					</tr>
+					`;
+					let t_q = req.session.cart.totalQty;
+					
+					for(let pizza of Object.values(req.session.cart.items)) {
+						msg+=`<tr><td>${pizza.item.itemName} </td>
+						<td>${pizza.item.price} </td>
+						<td>${pizza.qty} </td></tr>
+						` 
+					}
+					msg+=`<tr><td><strong>Total Price</strong></td><td>${req.session.cart.totalPrice}</td><td></td></tr>
+					<tr><td><strong>Total Quantity</strong></td><td>${t_q}</td><td></td></tr>
+					<tr><td><strong>Shipping Charges</strong></td><td>${req.session.cart.shippingCharge}</td><td></td></tr>
+					`;
+					console.log(typeof req.session.cart.totalPrice)
+					try {						
+						const transporter = nodemailer.createTransport({
+							host: "smtp.mailtrap.io",
+							port: 2525,
+							auth: {
+								user: "9048155c78ca97",
+								pass: "1efd4dcfeeb345"
+							}
+						})
+						const mailOptions = {
+							from: 'tandooribristo@gmail.com',
+							to: req.body.email,
+							subject: `Message from Tandoori Bristo`,
+							// text:req.body.contact_message,
+							html:msg
+						}
+				
+						transporter.sendMail(mailOptions ,(error,info)=>{
+							if(error){
+								console.log(error);
+								// res.send('error');
+							}else{
+								console.log('Email Sent'+info.response);
+								// res.send('success');
+							}
+						})
+						// res.send('success');
+					} catch (error) {
+						res.status(400).send(error.message);
+					}
+
         delete req.session.cart;
         return res.redirect('/order/confirm');
     } catch (error) {
@@ -407,6 +476,7 @@ module.exports = {
   contact,
   privacy,
   postBooking,
-  getTableItems
+  getTableItems,
+  getTableCheckout
 }
 

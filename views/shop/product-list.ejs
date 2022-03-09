@@ -32,7 +32,7 @@
 
 <div class="col-md-12">
 
-	<div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
+	<div data-target="#list-example" class="products__list">
 		<% let product_count=1; %> 
 		<% for(let cat of category) {%>
 		
@@ -49,7 +49,7 @@
 				<h5 class="card-title"><%= fmly.itemName %></h5>
 				  <p class="card-text"><%= fmly.description %></p>
 				<h6 class="price">$<%= fmly.price %></h6>
-				<% if (fmly.vegetarian === true) { %><div class="veg"></div><%  } else { %><div class="non-veg"></div><% } %>
+				<% if (fmly.vegetarian === true) { %><div class="veg">Veg</div><%  } else { %><div class="non-veg">Non-Veg</div><% } %>
 				<div class="action_btn"><a href = "javascript:void(0);" data-pizza="<%= JSON.stringify(fmly) %>" class="add-to-card btn btn-white btn-default">Add To Cart</a></div>
 				</div>
 			  </div>
@@ -85,17 +85,26 @@
 <style>
 	.veg {
 		background: green;
-		height: 1rem;
-		width: 1rem;
+		display: inline-block;
+		height: 2rem;
+		width: 9.2rem;
 		margin: 1rem 0;
-		border-radius: 50%;
+		text-align: center;
+		color: #fff;
+		padding: 3px;
 	}
 	.non-veg {
-		background:red;
-		height: 1rem;
-		width: 1rem;
+		background: red;
+		display: inline-block;
+		height: 2rem;
+		width: 9.2rem;
 		margin: 1rem 0;
-		border-radius: 50%;
+		text-align: center;
+		color: #fff;
+		padding: 3px;
+	}
+	.products_list .card-title {
+		color: #111;
 	}
 </style>
 <%- include('../includes/footer.ejs') %>

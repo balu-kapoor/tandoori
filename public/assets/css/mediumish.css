@@ -302,6 +302,13 @@ blockquote {
 	.post-top-meta.authorpage {
 		text-align:center;
 	}
+	.carousel-inner.wow.zoomIn, #carousel {
+		height: 50vh;
+	}
+	.carousel-item.active img {
+		width: auto !important;
+		object-fit: cover;
+	}
 }
 .share,.share a {
 	color:rgba(0,0,0,.44);
