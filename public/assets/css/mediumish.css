@@ -303,11 +303,14 @@ blockquote {
 		text-align:center;
 	}
 	.carousel-inner.wow.zoomIn, #carousel {
-		height: 50vh;
+		height: 40vh;
 	}
 	.carousel-item.active img {
 		width: auto !important;
 		object-fit: cover;
+	}
+	.carousel-caption h1 {
+		font-size: 37px !important;
 	}
 }
 .share,.share a {

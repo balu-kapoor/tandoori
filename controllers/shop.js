@@ -16,6 +16,9 @@ const firebase1 = require('firebase');
 const { check, validationResult } = require('express-validator');
 const stripe = require('stripe')('sk_test_51IPNeKFk1sSnNf4DkRZGbskzdeEvFihcGoP65Pyo96Zk791WEeahF7HNG875upr6mZ7yCvCgiR3bxeGKqd01I8Jr00Idp4MbEJ');
 const store = require('store');
+const expirePlugin = require('store/plugins/expire');
+
+store.addPlugin(expirePlugin);
 
 const getIndex = async (req, res, next) => {
     res.render('shop/index', {
@@ -25,6 +28,10 @@ const getIndex = async (req, res, next) => {
 };
 
 const getAllItems = async (req, res, next) => {
+    if(store.get('tableNumber')) {
+        table_number = store.get('tableNumber');
+        res.redirect(`/table/${table_number}`);
+    }
     store.clearAll()
     try {
         const items = await firestore.collection('items');
@@ -398,13 +405,13 @@ const postContact = async (req, res, next) => {
             host: "smtp.mailtrap.io",
             port: 2525,
             auth: {
-                user: "2fc78e5f49f076",
-                pass: "8b3bb2cddd0377"
+                user: "thetandooribistro@gmail.com",
+                pass: "Tandoori123@"
             }
         })
         const mailOptions = {
             from: req.body.contact_email,
-            to: 'naveen.webadsmedia@gmail.com',
+            to: 'thetandooribistro@gmail.com',
             subject: `Message from ${req.body.contact_email}:  Contact Us`,
             text:req.body.contact_message,
             html: `
@@ -436,15 +443,18 @@ const privacy = async(req, res, next) => {
 
 const postBooking = async (req, res, next) => {
     try {
-        const {name, email,phone,booking_time,date,person } = req.body;
+        const {name, email,phone,booking_time,date,person, description } = req.body;
         await firestore.collection('tablebookings').doc().set({
-            name:name,
-            email:email,
-            phone:phone,
-            time:booking_time,
-            date:date,
-            person:person,
+            customerName:name,
+            customerPhone:phone,
+            // email:email,
+            description:description, 
+            from: 'WEB',
+            member:person,
+            status: "ACCEPTED",
             creationDate: firebase1.firestore.FieldValue.serverTimestamp(),
+            tableNumber: '',
+            timing:date+' '+booking_time,
         });
         res.send('success');
     } catch (error) {

@@ -26651,21 +26651,23 @@ getdelivery  =  function(e, val) {
     let name = document.getElementById('booking_name');
     let email = document.getElementById('booking_email');
     let date = document.getElementById('booking_date');
+
     let booking_time = document.getElementById('booking_time');
     let phone = document.getElementById('booking_phone');
     let person = document.getElementById('booking_person');
+    let description = document.getElementById('description');
     var promise = new Promise(function(resolve, reject) {
         if(bookingForm != null) {
             bookingForm.addEventListener('submit',(e)=>{
                 e.preventDefault();
-    
                 let bookingData = {
                     name: name.value,
                     email: email.value,
                     phone: phone.value,
                     date: date.value,
                     booking_time: booking_time.value,
-                    person: person.value
+                    person: person.value,
+                    description: description.value 
                 }
                 let xhr = new XMLHttpRequest();
                 xhr.open('POST','/booking');
