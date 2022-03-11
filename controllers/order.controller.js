@@ -93,6 +93,11 @@ function orderController(){
 				order_type = 'DELIVERY';
 				cart.shippingCharge = parseFloat(shippingCharge);
 			}
+			
+			if(req.cookies.tableNumber) {
+				order_type = 'DINE-IN';
+			}
+
 
 			if(!mobileNumber) {
 				req.flash('error', 'All fields are required.');
@@ -164,9 +169,9 @@ email:email,
 					
 					//newdate = year+""+month+""+day;
 					
-					let table_number = '';
-					if(store.get('tableNumber')) {
-						table_number = store.get('tableNumber');
+					let table_number = null;
+					if(req.cookies.tableNumber) {
+						table_number = req.cookies.tableNumber;
 					}
 					// console.log(table_number)
 					var dt = new Date();
@@ -192,10 +197,9 @@ email:email,
 						orderType: req.session.order.orderType,
 						paidType:'PAY AT COUNTER',
 						price: totalPrice.toFixed(2),
-						status: 'NEW BOOKING',
+						status: 'NEW COMING',
 						tableNumber:table_number
 					})
-					store.clearAll()
 
 				let orderItemEntity = {};
 					for(let productId of Object.values(req.session.cart.items)) {	
@@ -223,6 +227,7 @@ email:email,
 						orderItemEntity['orderItemId'] = productId.item.id;	
 						orderItemEntity['price'] = price;
 						orderItemEntity['totalPrice'] = ParseFloat(total,2);
+						orderItemEntity['category'] = productId.item.category;
 						firestore.collection("orderitems").add(orderItemEntity)
 					}
 					
@@ -282,7 +287,7 @@ email:email,
 						res.status(400).send(error.message);
 					}
 
-					// console.log(req.session.cart.totalQty)
+					res.clearCookie("tableNumber");
 					delete req.session.cart;
 					return res.redirect('/order/confirm');
 				}

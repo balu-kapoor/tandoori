@@ -28,11 +28,12 @@ const getIndex = async (req, res, next) => {
 };
 
 const getAllItems = async (req, res, next) => {
-    if(store.get('tableNumber')) {
-        table_number = store.get('tableNumber');
+    
+    if(req.cookies.tableNumber) {
+        let table_number = req.cookies.tableNumber;
         res.redirect(`/table/${table_number}`);
-    }
-    store.clearAll()
+    }    
+    
     try {
         const items = await firestore.collection('items');
         const familyPack = await items.get();
@@ -95,7 +96,14 @@ const getItem = async (req, res, next) => {
 }
 
 const getTableItems = async (req, res, next) => {
-    store.set('tableNumber', req.params.number)    
+    // store.set('tableNumber', req.params.number, 600000)    
+    res.cookie('tableNumber', req.params.number, {
+        expires: new Date(Date.now() + 900000),
+        httpOnly: true
+      });
+    // console.log(req.cookies.tableNumber)
+    // res.clearCookie("tableNumber");
+
     try {
         const items = await firestore.collection('items');
         const familyPack = await items.get();
@@ -184,9 +192,10 @@ const getTableCheckout = async(req, res, next) => {
     }
     const { cart } = req.session;
     let table_number = null;
-    if(store.get('tableNumber')) {
-        table_number = store.get('tableNumber');
+    if(req.cookies.tableNumber) {
+        table_number = req.cookies.tableNumber;
     }
+    
     res.render('shop/checkout2', { delivery: delivery, pageTitle: 'Tandoori Bistro Checkout', path: '/cart', name: 'Edward', table_number})
 };
 
@@ -237,10 +246,18 @@ let deliveryAmount = 0;
             deliveryAmount = req.session.cart.shippingCharge;
             order_type = 'DELIVERY';
         }
+
+        
+        if(req.cookies.tableNumber) {
+            order_type = 'DINE-IN';
+        }
+
     let table_number = '';
-    if(store.get('tableNumber')) {
-        table_number = store.get('tableNumber');
+    
+    if(req.cookies.tableNumber) {
+        table_number = req.cookies.tableNumber;
     }
+
 	orderDocRef.set({
             collected: 'No',            
             count: count.toString(),
@@ -259,10 +276,9 @@ let deliveryAmount = 0;
             orderType: order_type,
             paidType:'STRIPE',
             price: totalPrice.toFixed(2),
-            status: 'NEW BOOKING',
+            status: 'NEW COMING',
             tableNumber:table_number
         })
-        store.clearAll()
 
         let orderItemEntity = {};
         for(let productId of Object.values(req.session.cart.items)) {					
@@ -276,6 +292,7 @@ let deliveryAmount = 0;
             orderItemEntity['orderId'] = orderDocRef.id;
             orderItemEntity['orderItemId'] = productId.item.id;	
             orderItemEntity['price'] = productId.item.price;
+            orderItemEntity['category'] = productId.item.category;
 orderItemEntity['totalPrice'] = ParseFloat(productId.item.price * productId.qty,2);
            firestore.collection("orderitems").add(orderItemEntity)
         }
@@ -411,7 +428,7 @@ const postContact = async (req, res, next) => {
         })
         const mailOptions = {
             from: req.body.contact_email,
-            to: 'thetandooribistro@gmail.com',
+            to: 'brkapoor11@gmail.com',
             subject: `Message from ${req.body.contact_email}:  Contact Us`,
             text:req.body.contact_message,
             html: `
@@ -440,22 +457,69 @@ const postContact = async (req, res, next) => {
 const privacy = async(req, res, next) => {
     res.render('shop/privacy', { pageTitle: 'Tandoori Bistro Privacy Policy', path: '/shop', name: '' })
 };
+const formatDate = (date) => {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
 
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 const postBooking = async (req, res, next) => {
     try {
         const {name, email,phone,booking_time,date,person, description } = req.body;
+        let convert_date = formatDate(date);
         await firestore.collection('tablebookings').doc().set({
             customerName:name,
             customerPhone:phone,
-            // email:email,
+            customerEmail:email,
             description:description, 
             from: 'WEB',
             member:person,
             status: "ACCEPTED",
             creationDate: firebase1.firestore.FieldValue.serverTimestamp(),
             tableNumber: '',
-            timing:date+' '+booking_time,
+            timing:convert_date+' '+booking_time,
         });
+        // send table booking mail
+        // try {
+            
+        //     const transporter = nodemailer.createTransport({
+        //         host: "smtp.mailtrap.io",
+        //         port: 2525,
+        //         auth: {
+        //             user: "thetandooribistro@gmail.com",
+        //             pass: "Tandoori123@"
+        //         }
+        //     })
+        //     const mailOptions = {
+        //         from: req.body.contact_email,
+        //         to: 'brkapoor11@gmail.com',
+        //         subject: `Message from ${req.body.contact_email}:  Contact Us`,
+        //         text:req.body.contact_message,
+        //         html: `
+        //         <strong>Name :</strong> ${req.body.contact_name} <br/>
+        //         <strong>Email :</strong> ${req.body.contact_email} <br/>
+        //         <strong>Phone :</strong> ${req.body.contact_phone} <br/>
+        //         <strong>Message :</strong>${req.body.contact_message}`
+        //     }
+    
+        //     transporter.sendMail(mailOptions ,(error,info)=>{
+        //         if(error){
+        //             console.log(error);
+        //         }else{
+        //             console.log('Email Sent'+info.response);
+        //         }
+        //     })
+        //     res.send('success');
+        // } catch (error) {
+        //     res.status(400).send(error.message);
+        // }
         res.send('success');
     } catch (error) {
         res.status(400).send(error.message);

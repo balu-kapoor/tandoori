@@ -7,7 +7,10 @@ const firebase = require('firebase-admin');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const errorController = require('./controllers/error');
+let cookieParser = require('cookie-parser');
+
 const app = express();
+app.use(cookieParser());
 
 const bcrypt = require('bcrypt');
 const passport = require('passport');

@@ -7,9 +7,10 @@ function cartController() {
 				return res.redirect('/menu');
 			}
 			let table_number = null;
-			if(store.get('tableNumber')) {
-				table_number = store.get('tableNumber');
+			if(req.cookies.tableNumber) {
+				table_number = req.cookies.tableNumber;
 			}
+			console.log(table_number)
 			res.render('shop/cart',{ pageTitle: 'Shopping Cart Detail',path: '/cart', table_number: table_number});
 		},
 		update(req, res) {
