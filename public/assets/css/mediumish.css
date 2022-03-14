@@ -1690,3 +1690,12 @@ form .rounded-pill{
 .timings {
     text-align: center;
 }
+div#smartbanner div, div#smartbanner a, div#smartbanner span {
+    z-index: 999 !important;
+}
+#smartbanner {
+	position: fixed !important;
+}
+.fixed-top {
+	z-index: 2 !important;
+}

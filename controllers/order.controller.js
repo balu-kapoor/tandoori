@@ -4,7 +4,7 @@ const firestore = firebase.firestore();
 const admin = require('firebase-admin');
 const moment = require('moment');
 const firebase1 = require('firebase');
-const stripe = require('stripe')('sk_test_51IPNeKFk1sSnNf4DkRZGbskzdeEvFihcGoP65Pyo96Zk791WEeahF7HNG875upr6mZ7yCvCgiR3bxeGKqd01I8Jr00Idp4MbEJ');
+const stripe = require('stripe')('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');
 const store = require('store');
 const nodemailer = require('nodemailer');
 
