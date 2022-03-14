@@ -198,7 +198,10 @@ email:email,
 						paidType:'PAY AT COUNTER',
 						price: totalPrice.toFixed(2),
 						status: 'NEW COMING',
-						tableNumber:table_number
+						tableNumber:table_number,
+						discountType: '',
+						discountValue: '',
+						netAmount: ''
 					})
 
 				let orderItemEntity = {};
@@ -258,12 +261,14 @@ email:email,
 					console.log(typeof req.session.cart.totalPrice)
 					try {						
 						const transporter = nodemailer.createTransport({
-							host: "smtp.mailtrap.io",
-							port: 2525,
-							auth: {
-								user: "thetandooribistro@gmail.com",
-								pass: "Tandoori123@"
-							}
+							host: "smtp.gmail.com",
+                            port: 587,
+                            ecure: false, // true for 587, false for other ports
+                            requireTLS: true,
+                            auth: {
+                                user: "thetandooribistro@gmail.com",
+                                pass: "Tandoori123@"
+                            }
 						})
 						const mailOptions = {
 							from: 'thetandooribistro@gmail.com',

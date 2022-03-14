@@ -26680,7 +26680,7 @@ getdelivery  =  function(e, val) {
                         layout: 'topRight',
                         timeout: 1000,
                         theme: 'relax',
-                        text: 'Your Booking has been submitted',
+                        text: 'You will get confirmation of your table booking through email/notification',
                         progressBar: false
                         }).show();
                         name.value= '';

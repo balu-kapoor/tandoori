@@ -277,7 +277,10 @@ let deliveryAmount = 0;
             paidType:'STRIPE',
             price: totalPrice.toFixed(2),
             status: 'NEW COMING',
-            tableNumber:table_number
+            tableNumber:table_number,
+            discountType: '',
+            discountValue: '',
+            netAmount: ''
         })
 
         let orderItemEntity = {};
@@ -323,12 +326,14 @@ orderItemEntity['totalPrice'] = ParseFloat(productId.item.price * productId.qty,
 					console.log(typeof req.session.cart.totalPrice)
 					try {						
 						const transporter = nodemailer.createTransport({
-							host: "smtp.mailtrap.io",
-							port: 2525,
-							auth: {
-								user: "thetandooribistro@gmail.com",
-								pass: "Tandoori123@"
-							}
+                            host: "smtp.gmail.com",
+                            port: 587,
+                            ecure: false, // true for 587, false for other ports
+                            requireTLS: true,
+                            auth: {
+                                user: "thetandooribistro@gmail.com",
+                                pass: "Tandoori123@"
+                            }
 						})
 						const mailOptions = {
 							from: 'thetandooribistro@gmail.com',
@@ -419,8 +424,10 @@ const postContact = async (req, res, next) => {
         const {contact_name, contact_email,contact_phone,contact_message } = req.body;
         
         const transporter = nodemailer.createTransport({
-            host: "smtp.mailtrap.io",
-            port: 2525,
+            host: "smtp.gmail.com",
+            port: 587,
+            ecure: false, // true for 587, false for other ports
+            requireTLS: true,
             auth: {
                 user: "thetandooribistro@gmail.com",
                 pass: "Tandoori123@"
@@ -428,7 +435,7 @@ const postContact = async (req, res, next) => {
         })
         const mailOptions = {
             from: req.body.contact_email,
-            to: 'brkapoor11@gmail.com',
+            to: 'thetandooribistro@gmail.com',
             subject: `Message from ${req.body.contact_email}:  Contact Us`,
             text:req.body.contact_message,
             html: `
