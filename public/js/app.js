@@ -26548,7 +26548,7 @@ getdelivery  =  function(e, val) {
                         layout: 'topRight',
                         timeout: 1000,
                         theme: 'relax',
-                        text: 'Minimum Order must be upto $30',
+                        text: 'Minimum Order must be upto $50',
                         progressBar: false
                       }).show();
                     $("#differentaddress").removeAttr("checked");
