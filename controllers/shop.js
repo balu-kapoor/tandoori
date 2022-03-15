@@ -203,6 +203,10 @@ const orderConfirm = async(req, res, next) => {
     delete req.session.cart;
     res.render('shop/confirm', { cart: Cart.getCart(), pageTitle: 'Tandoori Bistro Confirm', path: '/shop', name: '' })
 };
+const orderConfirm2 = async(req, res, next) => {
+    delete req.session.cart;
+    res.render('shop/confirm2', { cart: Cart.getCart(), pageTitle: 'Tandoori Bistro Confirm', path: '/shop', name: '' })
+};
 
 const getCheckoutSuccess = async(req, res, next) => {
     try {
@@ -217,7 +221,7 @@ const getCheckoutSuccess = async(req, res, next) => {
 
         var orderDocRef = firestore.collection('orders').doc();
         let count = 0;
-	let total = 0;
+	    let total = 0;
         for (let productId in req.session.cart.items) {
             count += req.session.cart.items[productId].qty;
 	    total = total +req.session.cart.items[productId].item.price*req.session.cart.items[productId].qty;
@@ -234,12 +238,12 @@ const getCheckoutSuccess = async(req, res, next) => {
 			var month = dateObj.getUTCMonth() + 1; //months from 1-12
 			var day = dateObj.getUTCDate();
 			var year = dateObj.getUTCFullYear();
-var dt = new Date();
+            var dt = new Date();
 			newdate = dt.getFullYear() + '' + (((dt.getMonth() + 1) < 10) ? '0' : '') + (dt.getMonth() + 1) + '' + ((dt.getDate() < 10) ? '0' : '') + dt.getDate();
-            		const orderNumber = "O-"+newdate+"-0"+increasedNum;
-            		const totalPrice = total;
-var deliveryTiming = year+"-"+month+"-"+day+" "+dateObj.getUTCHours()+":"+dateObj.getUTCMinutes()+":"+dateObj.getUTCSeconds()+"."+Math.floor(100000 + Math.random() * 900000);
-let deliveryAmount = 0;
+            const orderNumber = "O-"+newdate+"-0"+increasedNum;
+            const totalPrice = total;
+        var deliveryTiming = year+"-"+month+"-"+day+" "+dateObj.getUTCHours()+":"+dateObj.getUTCMinutes()+":"+dateObj.getUTCSeconds()+"."+Math.floor(100000 + Math.random() * 900000);
+        let deliveryAmount = 0;
         let order_type = 'PICKUP';
         console.log(req.session.order.orderType);
         if(req.session.order.orderType === 'DELIVERY'){
@@ -257,7 +261,7 @@ let deliveryAmount = 0;
     if(req.cookies.tableNumber) {
         table_number = req.cookies.tableNumber;
     }
-
+    console.log(totalPrice)
 	orderDocRef.set({
             collected: 'No',            
             count: count.toString(),
@@ -280,7 +284,7 @@ let deliveryAmount = 0;
             tableNumber:table_number,
             discountType: '',
             discountValue: '',
-            netAmount: ''
+            netAmount: (totalPrice + deliveryAmount).toFixed(2)
         })
 
         let orderItemEntity = {};
@@ -296,7 +300,7 @@ let deliveryAmount = 0;
             orderItemEntity['orderItemId'] = productId.item.id;	
             orderItemEntity['price'] = productId.item.price;
             orderItemEntity['category'] = productId.item.category;
-orderItemEntity['totalPrice'] = ParseFloat(productId.item.price * productId.qty,2);
+            orderItemEntity['totalPrice'] = ParseFloat(productId.item.price * productId.qty,2);
            firestore.collection("orderitems").add(orderItemEntity)
         }
         await firestore.collection('users').doc(id).delete();
@@ -358,6 +362,9 @@ orderItemEntity['totalPrice'] = ParseFloat(productId.item.price * productId.qty,
 					}
 
         delete req.session.cart;
+        if(table_number!=null) {
+            return res.redirect('/order/confirm2');
+        }
         return res.redirect('/order/confirm');
     } catch (error) {
         req.flash('error', 'Something went wrong!');
@@ -481,52 +488,21 @@ const postBooking = async (req, res, next) => {
     try {
         const {name, email,phone,booking_time,date,person, description } = req.body;
         let convert_date = formatDate(date);
-        await firestore.collection('tablebookings').doc().set({
+        var tableDocRef = firestore.collection('tablebookings').doc();
+        tableDocRef.set({
             customerName:name,
             customerPhone:phone,
             customerEmail:email,
             description:description, 
+            documentId:tableDocRef.id,
             from: 'WEB',
             member:person,
-            status: "ACCEPTED",
+            status: "WAIT FOR CONFIRMATION",
             creationDate: firebase1.firestore.FieldValue.serverTimestamp(),
             tableNumber: '',
             timing:convert_date+' '+booking_time,
         });
-        // send table booking mail
-        // try {
-            
-        //     const transporter = nodemailer.createTransport({
-        //         host: "smtp.mailtrap.io",
-        //         port: 2525,
-        //         auth: {
-        //             user: "thetandooribistro@gmail.com",
-        //             pass: "Tandoori123@"
-        //         }
-        //     })
-        //     const mailOptions = {
-        //         from: req.body.contact_email,
-        //         to: 'brkapoor11@gmail.com',
-        //         subject: `Message from ${req.body.contact_email}:  Contact Us`,
-        //         text:req.body.contact_message,
-        //         html: `
-        //         <strong>Name :</strong> ${req.body.contact_name} <br/>
-        //         <strong>Email :</strong> ${req.body.contact_email} <br/>
-        //         <strong>Phone :</strong> ${req.body.contact_phone} <br/>
-        //         <strong>Message :</strong>${req.body.contact_message}`
-        //     }
-    
-        //     transporter.sendMail(mailOptions ,(error,info)=>{
-        //         if(error){
-        //             console.log(error);
-        //         }else{
-        //             console.log('Email Sent'+info.response);
-        //         }
-        //     })
-        //     res.send('success');
-        // } catch (error) {
-        //     res.status(400).send(error.message);
-        // }
+
         res.send('success');
     } catch (error) {
         res.status(400).send(error.message);
@@ -558,6 +534,7 @@ module.exports = {
   privacy,
   postBooking,
   getTableItems,
-  getTableCheckout
+  getTableCheckout,
+  orderConfirm2
 }
 

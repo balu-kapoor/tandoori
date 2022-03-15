@@ -26606,27 +26606,39 @@ getdelivery  =  function(e, val) {
     };
     
     var updateCart = function updateCart(pizza) {
-      axios.post('/update-cart', pizza).then(function (res) {
-        cartCounter.innerText = res.data.totalQty;
-        mobCartCounter.innerText = res.data.totalQty;
-        new Noty({
-          type: 'success',
-          layout: 'topRight',
-          timeout: 1000,
-          theme: 'relax',
-          text: 'Item added to cart',
-          progressBar: false
-        }).show();
-      })["catch"](function (err) {
-        new Noty({
-          type: 'error',
-          layout: 'topRight',
-          timeout: 1000,
-          theme: 'relax',
-          text: 'Something went wrong',
-          progressBar: false
-        }).show();
-      });
+        if(pizza.isAvailable == 'NO') {
+            new Noty({
+                type: 'error',
+                layout: 'topRight',
+                timeout: 1000,
+                theme: 'relax',
+                text: 'Item is not available',
+                progressBar: false
+              }).show();             
+        } else {
+            axios.post('/update-cart', pizza).then(function (res) {        
+                cartCounter.innerText = res.data.totalQty;
+                mobCartCounter.innerText = res.data.totalQty;
+                new Noty({
+                  type: 'success',
+                  layout: 'topRight',
+                  timeout: 1000,
+                  theme: 'relax',
+                  text: 'Item added to cart',
+                  progressBar: false
+                }).show();
+              })["catch"](function (err) {
+                new Noty({
+                  type: 'error',
+                  layout: 'topRight',
+                  timeout: 1000,
+                  theme: 'relax',
+                  text: 'Something went wrong',
+                  progressBar: false
+                }).show();
+              });
+        }
+     
     };
 
     

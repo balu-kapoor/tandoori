@@ -201,7 +201,7 @@ email:email,
 						tableNumber:table_number,
 						discountType: '',
 						discountValue: '',
-						netAmount: ''
+						netAmount: totalPrice.toFixed(2)
 					})
 
 				let orderItemEntity = {};
@@ -294,6 +294,9 @@ email:email,
 
 					res.clearCookie("tableNumber");
 					delete req.session.cart;
+					if(table_number!=null) {
+						return res.redirect('/order/confirm2');
+					}
 					return res.redirect('/order/confirm');
 				}
 					let type = (ordertype ==='pickup') ? 'pay_now' : ordertype;

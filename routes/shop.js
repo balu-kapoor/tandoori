@@ -40,6 +40,7 @@ router.get('/checkout2', shopController.getTableCheckout);
 router.get('/checkout/success', shopController.getCheckoutSuccess);
 router.get('/checkout/cancel', shopController.getAllItems);
 router.get('/order/confirm', shopController.orderConfirm);
+router.get('/order/confirm2', shopController.orderConfirm2);
 router.get('/orders/:orderId', shopController.getInvoice);
 // Customer routes
 router.post('/orders', orderController.store);
