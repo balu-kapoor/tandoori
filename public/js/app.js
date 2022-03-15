@@ -26541,8 +26541,8 @@ getdelivery  =  function(e, val) {
             var price = matches[1];
             var pincode = matches[2];
             var total_price = parseFloat($('#product-subtotal > span').html());
-            if(parseInt(price) == 5){
-                if(total_price<30){
+            if(parseInt(price) == 5 || parseInt(price) == 10){
+                if(total_price<50){
                     new Noty({
                         type: 'error',
                         layout: 'topRight',
@@ -26557,38 +26557,38 @@ getdelivery  =  function(e, val) {
                     $('.close').trigger('click');
                     return false;
                 }
-            }else if(parseInt(price) == 10){
-                if(total_price<35){
-                    new Noty({
-                        type: 'error',
-                        layout: 'topRight',
-                        timeout: 1000,
-                        theme: 'relax',
-                        text: 'Minimum Order must be upto $35',
-                        progressBar: false
-                      }).show();
-                    $("#differentaddress").removeAttr("checked");
-                    $("#differentaddress").attr("checked", false);
-                    $('#different_address').css('display','none');
-                    $('.close').trigger('click');
-                    return false;
-                }
-            }else if(parseInt(price) == 15){
-                if(total_price<45){
-                    new Noty({
-                        type: 'error',
-                        layout: 'topRight',
-                        timeout: 1000,
-                        theme: 'relax',
-                        text: 'Minimum Order must be upto $45',
-                        progressBar: false
-                      }).show();
-                    $("#differentaddress").removeAttr("checked");
-                    $("#differentaddress").attr("checked", false);
-                    $('#different_address').css('display','none');
-                    $('.close').trigger('click');
-                    return false;
-                }
+            // }else if(parseInt(price) == 10){
+            //     if(total_price<35){
+            //         new Noty({
+            //             type: 'error',
+            //             layout: 'topRight',
+            //             timeout: 1000,
+            //             theme: 'relax',
+            //             text: 'Minimum Order must be upto $35',
+            //             progressBar: false
+            //           }).show();
+            //         $("#differentaddress").removeAttr("checked");
+            //         $("#differentaddress").attr("checked", false);
+            //         $('#different_address').css('display','none');
+            //         $('.close').trigger('click');
+            //         return false;
+            //     }
+            // }else if(parseInt(price) == 15){
+            //     if(total_price<45){
+            //         new Noty({
+            //             type: 'error',
+            //             layout: 'topRight',
+            //             timeout: 1000,
+            //             theme: 'relax',
+            //             text: 'Minimum Order must be upto $45',
+            //             progressBar: false
+            //           }).show();
+            //         $("#differentaddress").removeAttr("checked");
+            //         $("#differentaddress").attr("checked", false);
+            //         $('#different_address').css('display','none');
+            //         $('.close').trigger('click');
+            //         return false;
+            //     }
             }
             
             $('#city').val(toTitleCase(area));
