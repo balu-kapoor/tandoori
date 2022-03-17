@@ -26533,6 +26533,20 @@
     var addToCart = document.querySelectorAll('.add-to-card');
     var cartCounter = document.querySelector('#cart-counter');
     var mobCartCounter = document.querySelector('#mob-cart-counter');
+    
+
+$('#open_camera').click(()=> {
+    new Noty({
+        type: 'error',
+        layout: 'topRight',
+        timeout: 1000,
+        theme: 'relax',
+        text: 'Re-scan the QR code again, For continuous order',
+        progressBar: false
+      }).show();
+
+      return false;
+})
 
 getdelivery  =  function(e, val) {
         if (!$(this).is(':checked')) {

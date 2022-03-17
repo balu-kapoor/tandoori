@@ -98,7 +98,7 @@ const getItem = async (req, res, next) => {
 const getTableItems = async (req, res, next) => {
     // store.set('tableNumber', req.params.number, 600000)    
     res.cookie('tableNumber', req.params.number, {
-        expires: new Date(Date.now() + 900000),
+        expires: new Date(Date.now() + 300000),
         httpOnly: true
       });
     // console.log(req.cookies.tableNumber)
@@ -201,11 +201,19 @@ const getTableCheckout = async(req, res, next) => {
 
 const orderConfirm = async(req, res, next) => {
     delete req.session.cart;
+
+    
     res.render('shop/confirm', { cart: Cart.getCart(), pageTitle: 'Tandoori Bistro Confirm', path: '/shop', name: '' })
 };
 const orderConfirm2 = async(req, res, next) => {
     delete req.session.cart;
-    res.render('shop/confirm2', { cart: Cart.getCart(), pageTitle: 'Tandoori Bistro Confirm', path: '/shop', name: '' })
+
+    let table_number = null;
+    if(req.cookies.tableNumber) {
+        table_number = req.cookies.tableNumber;
+    }
+
+    res.render('shop/confirm2', { cart: Cart.getCart(), pageTitle: 'Tandoori Bistro Confirm', path: '/shop', name: '', table_number })
 };
 
 const getCheckoutSuccess = async(req, res, next) => {

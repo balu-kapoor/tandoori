@@ -18,7 +18,7 @@ function orderController(){
 			
 			let type = req.query.type;
 			const lineItems = [];
-			console.log(type);
+			// console.log(type);
 			if(type === 'delivery' || type ==='pay_now'){
 				let shipping_charges = (req.session.cart.shippingCharge) ? req.session.cart.shippingCharge : 0;
 				for(let productId of Object.values(req.session.cart.items)) {	
