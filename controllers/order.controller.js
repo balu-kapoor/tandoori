@@ -297,7 +297,7 @@ email:email,
 						res.status(400).send(error.message);
 					}
 					
-					// res.clearCookie("tableNumber");
+					res.clearCookie("tableNumber");
 					delete req.session.cart;
 					if(table_number) {
 						return res.redirect('/order/confirm2');

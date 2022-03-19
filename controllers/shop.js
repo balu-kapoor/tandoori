@@ -342,7 +342,7 @@ const getCheckoutSuccess = async(req, res, next) => {
 					<tr><td><strong>Total Quantity</strong></td><td>${t_q}</td><td></td></tr>
 					<tr><td><strong>Shipping Charges</strong></td><td>${req.session.cart.shippingCharge}</td><td></td></tr>
 					`;
-					console.log(typeof req.session.cart.totalPrice)
+					console.log(req.body)
 					try {						
 						const transporter = nodemailer.createTransport({
                             host: "smtp.gmail.com",
@@ -377,6 +377,8 @@ const getCheckoutSuccess = async(req, res, next) => {
 					}
 
         delete req.session.cart;
+        res.clearCookie("tableNumber");
+        
         if(table_number) {
             return res.redirect('/order/confirm2');
         }
