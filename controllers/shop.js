@@ -377,7 +377,7 @@ const getCheckoutSuccess = async(req, res, next) => {
 					}
 
         delete req.session.cart;
-        if(table_number.length) {
+        if(table_number) {
             return res.redirect('/order/confirm2');
         }
         return res.redirect('/order/confirm');

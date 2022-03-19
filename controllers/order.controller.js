@@ -208,11 +208,11 @@ email:email,
 					for(let productId of Object.values(req.session.cart.items)) {	
 						var total = productId.item.price * productId.qty;
 						var price = parseFloat(productId.item.price);
-						if(Number.isInteger(total)){
-							total = total+.01;
-						}else{
+						// if(Number.isInteger(total)){
+						// 	total = total+.01;
+						// }else{
 							total = productId.item.price * productId.qty;
-						}
+						// }
 
 						// if(Number.isInteger(price)){
 						// 	price = price+.01;
@@ -296,10 +296,10 @@ email:email,
 					} catch (error) {
 						res.status(400).send(error.message);
 					}
-
-					res.clearCookie("tableNumber");
+					
+					// res.clearCookie("tableNumber");
 					delete req.session.cart;
-					if(table_number.length) {
+					if(table_number) {
 						return res.redirect('/order/confirm2');
 					}
 					return res.redirect('/order/confirm');
