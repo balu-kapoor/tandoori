@@ -230,11 +230,13 @@ email:email,
 						orderItemEntity['orderItemId'] = productId.item.id;	
 						orderItemEntity['price'] = price;
 						orderItemEntity['totalPrice'] = ParseFloat(total,2);
-						orderItemEntity['category'] = productId.item.category;
-						
-						const { id } = firestore.collection("orderitems").add(orderItemEntity)
-						orderItemEntity['documentId'] = id;
-						firestore.collection("orderitems").doc(id).update(orderItemEntity);
+						orderItemEntity['category'] = productId.item.category;						
+						 
+						// const doc_id = firestore.collection("orderitems").add(orderItemEntity)
+						let orderItemsDocRef = firestore.collection('orderitems').doc();
+						orderItemsDocRef.set(orderItemEntity);
+						orderItemEntity['documentId'] = orderItemsDocRef.id;
+						firestore.collection("orderitems").doc(orderItemsDocRef.id).update(orderItemEntity);
 					}
 					
 					await firestore.collection('users').doc(userDocRef.id).delete();
@@ -297,7 +299,7 @@ email:email,
 
 					res.clearCookie("tableNumber");
 					delete req.session.cart;
-					if(table_number!=null) {
+					if(table_number.length) {
 						return res.redirect('/order/confirm2');
 					}
 					return res.redirect('/order/confirm');

@@ -310,9 +310,13 @@ const getCheckoutSuccess = async(req, res, next) => {
             orderItemEntity['category'] = productId.item.category;
             orderItemEntity['totalPrice'] = ParseFloat(productId.item.price * productId.qty,2);
            
-            const { id } = firestore.collection("orderitems").add(orderItemEntity)
-           orderItemEntity['documentId'] = id;
-           firestore.collection("orderitems").doc(id).update(orderItemEntity);
+            // const doc_id = firestore.collection("orderitems").add(orderItemEntity)
+            // orderItemEntity['documentId'] = doc_id.id;
+            // firestore.collection("orderitems").doc(doc_id.id).update(orderItemEntity);
+            let orderItemsDocRef = firestore.collection('orderitems').doc();
+            orderItemsDocRef.set(orderItemEntity);
+            orderItemEntity['documentId'] = orderItemsDocRef.id;
+            firestore.collection("orderitems").doc(orderItemsDocRef.id).update(orderItemEntity);
         }
         await firestore.collection('users').doc(id).delete();
 
@@ -373,7 +377,7 @@ const getCheckoutSuccess = async(req, res, next) => {
 					}
 
         delete req.session.cart;
-        if(table_number!=null) {
+        if(table_number.length) {
             return res.redirect('/order/confirm2');
         }
         return res.redirect('/order/confirm');
