@@ -309,7 +309,10 @@ const getCheckoutSuccess = async(req, res, next) => {
             orderItemEntity['price'] = productId.item.price;
             orderItemEntity['category'] = productId.item.category;
             orderItemEntity['totalPrice'] = ParseFloat(productId.item.price * productId.qty,2);
-           firestore.collection("orderitems").add(orderItemEntity)
+           
+            const { id } = firestore.collection("orderitems").add(orderItemEntity)
+           orderItemEntity['documentId'] = id;
+           firestore.collection("orderitems").doc(id).update(orderItemEntity);
         }
         await firestore.collection('users').doc(id).delete();
 

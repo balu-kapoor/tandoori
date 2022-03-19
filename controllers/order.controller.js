@@ -214,11 +214,11 @@ email:email,
 							total = productId.item.price * productId.qty;
 						}
 
-						if(Number.isInteger(price)){
-							price = price+.01;
-						}else{
+						// if(Number.isInteger(price)){
+						// 	price = price+.01;
+						// }else{
 							price = parseFloat(productId.item.price);
-						}
+						// }
 						orderItemEntity['count'] = productId.qty;				
 						orderItemEntity['createdBy'] = name;
 						orderItemEntity['creationByUid'] = userDocRef.id;
@@ -231,7 +231,10 @@ email:email,
 						orderItemEntity['price'] = price;
 						orderItemEntity['totalPrice'] = ParseFloat(total,2);
 						orderItemEntity['category'] = productId.item.category;
-						firestore.collection("orderitems").add(orderItemEntity)
+						
+						const { id } = firestore.collection("orderitems").add(orderItemEntity)
+						orderItemEntity['documentId'] = id;
+						firestore.collection("orderitems").doc(id).update(orderItemEntity);
 					}
 					
 					await firestore.collection('users').doc(userDocRef.id).delete();
