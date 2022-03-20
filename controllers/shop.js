@@ -338,7 +338,7 @@ const getCheckoutSuccess = async(req, res, next) => {
 						<td>${pizza.qty} </td></tr>
 						` 
 					}
-					msg+=`<tr><td><strong>Total Price</strong></td><td>${req.session.cart.totalPrice}</td><td></td></tr>
+					msg+=`<tr><td><strong>Total Price</strong></td><td>${totalPrice}</td><td></td></tr>
 					<tr><td><strong>Total Quantity</strong></td><td>${t_q}</td><td></td></tr>
 					<tr><td><strong>Shipping Charges</strong></td><td>${req.session.cart.shippingCharge}</td><td></td></tr>
 					`;
