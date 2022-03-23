@@ -272,7 +272,7 @@ email:email,
                             requireTLS: true,
                             auth: {
                                 user: "thetandooribistro@gmail.com",
-                                pass: "Tandoori123@"
+                                pass: "TandooriBistro0993@"
                             }
 						})
 						const mailOptions = {
