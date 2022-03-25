@@ -184,6 +184,16 @@ const getCheckout = async(req, res, next) => {
     res.render('shop/checkout', { delivery: delivery, pageTitle: 'Tandoori Bistro Checkout', path: '/cart', name: 'Edward' })
 };
 
+const getAdvance = async(req, res, next) => {
+    if(!req.session.cart) {
+        return res.redirect('/menu');
+    }else if(req.session.cart && Object.values(req.session.cart.items) ==0){
+        return res.redirect('/menu');
+    }
+    const { cart } = req.session;
+    res.render('shop/advance', { delivery: delivery, pageTitle: 'Tandoori Bistro Checkout', path: '/cart', name: 'Edward' })
+};
+
 const getTableCheckout = async(req, res, next) => {
     if(!req.session.cart) {
         return res.redirect('/menu');
@@ -218,7 +228,23 @@ const orderConfirm2 = async(req, res, next) => {
 
 const getCheckoutSuccess = async(req, res, next) => {
     try {
-        const {name, mobileNumber, email, address,ordertype } = req.body;
+        const {name, mobileNumber, email, address,ordertype, advance_date, advance_time,advance_order } = req.body;
+        
+        var dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+        var deliveryTiming = year+"-"+month+"-"+day+" "+dateObj.getUTCHours()+":"+dateObj.getUTCMinutes()+":"+dateObj.getUTCSeconds()+"."+Math.floor(100000 + Math.random() * 900000);
+        let status = 'NEW COMING';
+        if(advance_order) {
+            status = 'ADVANCE PENDING';
+            let timestamp = Date.parse(advance_date);
+            let dateObject = new Date(timestamp); 
+            month = dateObject.getUTCMonth() + 1; //months from 1-12
+            day = dateObject.getUTCDate();
+            year = dateObject.getUTCFullYear();
+            deliveryTiming = year+"-"+month+"-"+day+" "+advance_time+":00"+"."+Math.floor(100000 + Math.random() * 900000);
+        }
         let userDocRef = firestore.collection('users').doc();
         req.session.user_id = userDocRef.id
         const ordersRef = firestore.collection('orders');
@@ -242,15 +268,12 @@ const getCheckoutSuccess = async(req, res, next) => {
         const pieces = ordrNo.split(/[\s-]+/)
 			const last = pieces[pieces.length - 1]
 			let increasedNum = Number(last) + 1;
-			var dateObj = new Date();
-			var month = dateObj.getUTCMonth() + 1; //months from 1-12
-			var day = dateObj.getUTCDate();
-			var year = dateObj.getUTCFullYear();
+			
             var dt = new Date();
 			newdate = dt.getFullYear() + '' + (((dt.getMonth() + 1) < 10) ? '0' : '') + (dt.getMonth() + 1) + '' + ((dt.getDate() < 10) ? '0' : '') + dt.getDate();
             const orderNumber = "O-"+newdate+"-0"+increasedNum;
             const totalPrice = total;
-        var deliveryTiming = year+"-"+month+"-"+day+" "+dateObj.getUTCHours()+":"+dateObj.getUTCMinutes()+":"+dateObj.getUTCSeconds()+"."+Math.floor(100000 + Math.random() * 900000);
+            
         let deliveryAmount = 0;
         let order_type = 'PICKUP';
         console.log(req.session.order.orderType);
@@ -269,7 +292,6 @@ const getCheckoutSuccess = async(req, res, next) => {
     if(req.cookies.tableNumber) {
         table_number = req.cookies.tableNumber;
     }
-    console.log(totalPrice)
 	orderDocRef.set({
             collected: 'No',            
             count: count.toString(),
@@ -288,7 +310,7 @@ const getCheckoutSuccess = async(req, res, next) => {
             orderType: order_type,
             paidType:'STRIPE',
             price: totalPrice.toFixed(2),
-            status: 'NEW COMING',
+            status: status,
             tableNumber:table_number,
             discountType: '',
             discountValue: '',
@@ -552,6 +574,7 @@ module.exports = {
   postBooking,
   getTableItems,
   getTableCheckout,
-  orderConfirm2
+  orderConfirm2,
+  getAdvance
 }
 

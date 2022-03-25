@@ -82,9 +82,25 @@ function orderController(){
 			}
 		},
 		async store(req, res) {
+			
 			let userEntity = {};
 			// Validate request
-			const {name, mobileNumber, email, address,city,postcode,ordertype,pickupType,shippingCharge } = req.body;
+			const {name, mobileNumber, email, address,city,postcode,ordertype,pickupType,shippingCharge, advance_date, advance_time,advance_order } = req.body;
+			var dateObj = new Date();
+			var month = dateObj.getUTCMonth() + 1; //months from 1-12
+			var day = dateObj.getUTCDate();
+			var year = dateObj.getUTCFullYear();
+			var deliveryTiming = year+"-"+month+"-"+day+" "+dateObj.getUTCHours()+":"+dateObj.getUTCMinutes()+":"+dateObj.getUTCSeconds()+"."+Math.floor(100000 + Math.random() * 900000);
+			let status = 'NEW COMING';
+			if(advance_order) {
+				status = 'ADVANCE PENDING';
+				let timestamp = Date.parse(advance_date);
+				let dateObject = new Date(timestamp); 
+				month = dateObject.getUTCMonth() + 1; //months from 1-12
+				day = dateObject.getUTCDate();
+				year = dateObject.getUTCFullYear();
+				deliveryTiming = year+"-"+month+"-"+day+" "+advance_time+":00"+"."+Math.floor(100000 + Math.random() * 900000);
+			}
 			let { cart } = req.session;
 			let order_type = '';
 			if(ordertype === 'pickup'){
@@ -162,10 +178,6 @@ email:email,
 					const pieces = ordrNo.split(/[\s-]+/)
 					const last = pieces[pieces.length - 1]
 					let increasedNum = Number(last) + 1;
-					var dateObj = new Date();
-					var month = dateObj.getUTCMonth() + 1; //months from 1-12
-					var day = dateObj.getUTCDate();
-					var year = dateObj.getUTCFullYear();
 					
 					//newdate = year+""+month+""+day;
 					
@@ -178,7 +190,7 @@ email:email,
 					newdate = dt.getFullYear() + '' + (((dt.getMonth() + 1) < 10) ? '0' : '') + (dt.getMonth() + 1) + '' + ((dt.getDate() < 10) ? '0' : '') + dt.getDate();
 					const orderNumber = "O-"+newdate+"-0"+increasedNum;
 					var orderDocRef = firestore.collection('orders').doc();	
-					var deliveryTiming = year+"-"+month+"-"+day+" "+dateObj.getUTCHours()+":"+dateObj.getUTCMinutes()+":"+dateObj.getUTCSeconds()+"."+Math.floor(100000 + Math.random() * 900000);	
+						
 					orderDocRef.set({
 						collected: 'No',            
 						count: count.toString(),
@@ -197,7 +209,7 @@ email:email,
 						orderType: req.session.order.orderType,
 						paidType:'PAY AT COUNTER',
 						price: totalPrice.toFixed(2),
-						status: 'NEW COMING',
+						status: status,
 						tableNumber:table_number,
 						discountType: '',
 						discountValue: '',

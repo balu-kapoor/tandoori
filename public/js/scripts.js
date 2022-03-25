@@ -670,4 +670,23 @@ PAGE JS
 			});
 		});
 	}
+	$('.advancePicker').datepicker({
+		minDate: 0,
+		maxDate: '+6',
+		/* beforeShowDay: $.datepicker.noWeekends */
+		beforeShowDay: function(date) {
+		 var show = true;
+		 if(date.getDay()==1 || date.getDay()==2) show=false
+		 return [show];
+		}
+	});
+
+	const now = new Date().getHours()
+	const d = new Date();
+	let day = d.getDay();
+
+	if (!(now >= 17 && now <= 21) || (day == 1 || day== 2)) {
+		$('.chackout_asap').hide();
+	}	
+	  
 })(jQuery);

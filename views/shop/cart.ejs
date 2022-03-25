@@ -73,11 +73,18 @@
                                                     <div class="coupon field_form input-group">
                                                         <input type="text" value="$<%= total.toFixed(2) %>" class="form-control form-control-sm cart_total_amount" disabled="disabled" readonly="readonly">
                                                         <div class="input-group-append">
-                                                            <a href="<% if(table_number != null) {%>/checkout2<% } else { %>/checkout<% } %>" class="btn btn-default btn-sm">CheckOut</a>
-                                                        </div>
-                                                    </div>
+                                                            <a href="<% if(table_number != null) {%>/checkout2<% } else { %>/checkout<% } %>" class="btn btn-default btn-sm chackout_asap">As Soon As</a>
+                                                        </div>                                                 
+                                                    </div>                                                      
                                                 </div>
                                             </div>        
+                                        </td>
+                                        <td>
+                                            <div class="md-6">
+                                                <div class="input-group-append">
+                                                    <a href="/advance" class="btn btn-default btn-sm">Advance Order</a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tfoot>
