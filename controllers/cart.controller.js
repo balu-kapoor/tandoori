@@ -10,13 +10,18 @@ function cartController() {
 			if(req.cookies.tableNumber) {
 				table_number = req.cookies.tableNumber;
 			}
-			console.log(table_number)
+			// console.log(table_number)
 			res.render('shop/cart',{ pageTitle: 'Shopping Cart Detail',path: '/cart', table_number: table_number});
 		},
 		update(req, res) {
 			const { id, price } = req.body;
 			// First time creating cart and adding basic object structure
 			// console.log(req.params.number);
+			let table_number = null;
+			if(req.cookies.tableNumber) {
+				table_number = req.cookies.tableNumber;
+			}
+
 			if(!req.session.cart) {
 				req.session.cart = {
 					items: {},
@@ -49,6 +54,10 @@ function cartController() {
 		},
 		updateQuantity(req, res) {
 			const { id, price, quantity } = req.body;
+			let table_number = null;
+			if(req.cookies.tableNumber) {
+				table_number = req.cookies.tableNumber;
+			}
 			let { cart } = req.session;
 			if(!cart.items[id]) {
 				cart.items[id] = {
@@ -65,7 +74,8 @@ function cartController() {
 			res.render('shop/cart-details', {
 				pageTitle: 'Shop',
 				path: '/',
-				totalQty: cart.totalQty
+				totalQty: cart.totalQty,
+				table_number
 			});
 		},
 		removeFromCart(req, res) {
@@ -74,13 +84,18 @@ function cartController() {
 			}
 			const { key } = req.body
 			 let { cart } = req.session;
+			 let table_number = null;
+			if(req.cookies.tableNumber) {
+				table_number = req.cookies.tableNumber;
+			}
 			 cart.totalQty -= 1;
 			 cart.totalPrice -= parseFloat(req.session.cart.items[key].item.price);
 			 delete req.session.cart.items[key];
 			res.render('shop/cart-details', {
 				pageTitle: 'Shop',
 				path: '/',
-				totalQty: cart.totalQty
+				totalQty: cart.totalQty,
+				table_number
 			});
 		},
 		updateNote(req, res){

@@ -150,13 +150,13 @@
         e.preventDefault();
         $.post('cart-delete-item', {key:key}, function(data){
             $('#cart-summary').html(data);
-        });
+        });                
     }
     
     function updateQuantity(key,price, element){
         $.post('update-quantity', { id:key,price:price, quantity: element.value}, function(data){
             $('#cart-summary').html(data);
-        });
+        });      
     }
         
 </script>

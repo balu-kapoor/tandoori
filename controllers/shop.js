@@ -175,6 +175,12 @@ const getCart = async (req, res, next) => {
 }
 
 const getCheckout = async(req, res, next) => {
+    const now = new Date().getHours();
+    const d = new Date();
+    let day = d.getDay();
+    if (!(now >= 17 && now <= 21) || (day == 1 || day== 2)) {
+        return res.redirect('/cart');       
+	}	
     if(!req.session.cart) {
         return res.redirect('/menu');
     }else if(req.session.cart && Object.values(req.session.cart.items) ==0){
@@ -195,6 +201,12 @@ const getAdvance = async(req, res, next) => {
 };
 
 const getTableCheckout = async(req, res, next) => {
+    const now = new Date().getHours();
+    const d = new Date();
+    let day = d.getDay();
+    if (!(now >= 17 && now <= 21) || (day == 1 || day== 2)) {
+        return res.redirect('/cart');       
+	}	
     if(!req.session.cart) {
         return res.redirect('/menu');
     }else if(req.session.cart && Object.values(req.session.cart.items) ==0){

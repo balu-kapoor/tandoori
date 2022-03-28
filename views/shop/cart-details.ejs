@@ -28,11 +28,11 @@
                         <td class="product-quantity" data-title="Quantity">
                             <div class="quantity aiz-plus-minus mr-2 ml-0">
                                 <button class="btn col-auto btn-icon btn-sm btn-circle btn-light minus" type="button" data-type="minus" data-field="quantity[<%= pizza.item.id %>]">
-                                    <i class="fas fa-minus"></i>
+                                    <i class="ti-minus"></i>
                                 </button>
                                 <input type="text" name="quantity[<%= pizza.item.id %>]" class="qty update-quantity" placeholder="1" value="<%= pizza.qty %>" min="1" max="10" readonly onchange="updateQuantity('<%= pizza.item.id %>','<%= pizza.item.price %>', this)">
                                 <button class="btn col-auto btn-icon btn-sm btn-circle btn-light plus" type="button" data-type="plus" data-field="quantity[<%= pizza.item.id %>]">
-                                    <i class="fas fa-plus"></i>
+                                    <i class="ti-plus"></i>
                                 </button>
                             </div>
                         </td>
@@ -49,12 +49,17 @@
                     <tr>
                         <td colspan="6" class="px-0">
                             <div class="row no-gutters align-items-center">        
-                                <div class="col-lg-4 col-md-6 mb-3 mb-md-0">
+                                <div class="col-lg-6 col-md-6 mb-3 mb-md-0">
                                     <div class="coupon field_form input-group">
                                         <input type="text" value="$<%= total.toFixed(2) %>" class="form-control form-control-sm cart_total_amount" disabled="disabled" readonly="readonly">
+                                        &nbsp;&nbsp;
                                         <div class="input-group-append">
-                                            <a href="/checkout" class="btn btn-default btn-sm">CheckOut</a>
+                                            <a href="<% if(table_number != null) {%>/checkout2<% } else { %>/checkout<% } %>" class="btn btn-default btn-sm chackout_asap">As Soon As</a>
                                         </div>
+                                        &nbsp;&nbsp;
+                                        <div class="input-group-append">
+                                            <a href="/advance" class="btn btn-default btn-sm">Advance Order</a>
+                                        </div> 
                                     </div>
                                 </div>
                             </div>

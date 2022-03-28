@@ -26783,6 +26783,24 @@ getdelivery  =  function(e, val) {
     
      }
      
+    //  asap click event
+    $('.chackout_asap').click(()=>{
+		const now = new Date().getHours();
+		const d = new Date();
+		let day = d.getDay();
+		if (!(now >= 17 && now <= 21) || (day == 1 || day== 2)) {
+			new Noty({
+				type: 'error',
+				layout: 'topRight',
+				timeout: 1000,
+				theme: 'relax',
+				text: 'We are closed for now.',
+				progressBar: false
+			}).show();
+			return false;
+		}	
+
+	});	
     // Booking Form
     
     var statuses = document.querySelectorAll('.status_line');
