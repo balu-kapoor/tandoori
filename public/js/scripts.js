@@ -674,6 +674,31 @@ PAGE JS
 		minDate: 0,
 		maxDate: '+6',
 		/* beforeShowDay: $.datepicker.noWeekends */
+		onSelect: function (dateString, txtDate) {
+			var today = new Date(dateString);
+			var day = today.toLocaleString('en-us', {weekday: 'long'});
+
+			if(day=='Friday' || day=='Saturday' || day=='Sunday'){				
+				$('#advance_time').prepend($('<option>').val('14:30').text('02:30 PM'))
+				$('#advance_time').prepend($('<option>').val('14:00').text('02:00 PM'))
+				$('#advance_time').prepend($('<option>').val('13:30').text('01:30 PM'))
+				$('#advance_time').prepend($('<option>').val('13:00').text('01:00 PM'))
+				$('#advance_time').prepend($('<option>').val('12:30').text('12:30 PM'))
+				$('#advance_time').prepend($('<option>').val('12:00').text('12:00 PM'))
+				$('#advance_time').prepend($('<option>').val('11:30').text('11:30 AM'))
+			}else{
+				
+				$.each($('#advance_time option'), function( index, value ) {
+					// $(this).remove();
+					console.log($(this).val())
+					if($(this).val() == '11:30' || $(this).val() == '12:00' || $(this).val() == '12:30' || $(this).val() == '13:00' || $(this).val() == '13:30' || $(this).val() == '14:00' || $(this).val() == '14:30') {
+						$(this).remove();
+					}
+				  });
+			}
+			$('#advance_time').removeClass('hidden-md-up');
+			//DisplayDate("Selected Date: " + day + "\nTextBox ID: " + txtDate.id);
+		},
 		beforeShowDay: function(date) {
 		 var show = true;
 		 if(date.getDay()==1 || date.getDay()==2) show=false
@@ -686,7 +711,7 @@ PAGE JS
 	let day = d.getDay();
 
 	if (!(now >= 17 && now <= 21) || (day == 1 || day== 2)) {
-		// $('.chackout_asap').remove();
+		$('.chackout_asap').remove();
 	}	
 	  
 })(jQuery);

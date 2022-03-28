@@ -92,7 +92,7 @@ function orderController(){
 			var year = dateObj.getUTCFullYear();
 			var deliveryTiming = year+"-"+month+"-"+day+" "+dateObj.getUTCHours()+":"+dateObj.getUTCMinutes()+":"+dateObj.getUTCSeconds()+"."+Math.floor(100000 + Math.random() * 900000);
 			let status = 'NEW COMING';
-			if(advance_order) {
+			if(advance_order == true) {
 				req.session.advance_order = advance_order;
 				req.session.advance_date = advance_date;
 				req.session.advance_time = advance_time;

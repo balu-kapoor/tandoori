@@ -238,7 +238,7 @@ const getCheckoutSuccess = async(req, res, next) => {
         var year = dateObj.getUTCFullYear();
         var deliveryTiming = year+"-"+month+"-"+day+" "+dateObj.getUTCHours()+":"+dateObj.getUTCMinutes()+":"+dateObj.getUTCSeconds()+"."+Math.floor(100000 + Math.random() * 900000);
         let status = 'NEW COMING';
-        if(advance_order) {
+        if(advance_order == true) {
             const advance_date = req.session.advance_date;
             const advance_time = req.session.advance_time;
             status = 'ADVANCE PENDING';
