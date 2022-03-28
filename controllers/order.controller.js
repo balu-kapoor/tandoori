@@ -279,7 +279,7 @@ email:email,
 					<tr><td><strong>Total Quantity</strong></td><td>${t_q}</td><td></td></tr>
 					<tr><td><strong>Shipping Charges</strong></td><td>${req.session.cart.shippingCharge}</td><td></td></tr>
 					`;
-					console.log(typeof req.session.cart.totalPrice)
+					// console.log(typeof req.session.cart.totalPrice)
 					try {						
 						const transporter = nodemailer.createTransport({
 							host: "smtp.gmail.com",

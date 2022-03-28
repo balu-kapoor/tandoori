@@ -26782,9 +26782,9 @@ getdelivery  =  function(e, val) {
         
     
      }
-     
-    //  asap click event
-    $('.chackout_asap').click(()=>{
+         
+    // $('.chackout_asap').click(()=>{
+    $('body').delegate('.chackout_asap','click',function(e){
 		const now = new Date().getHours();
 		const d = new Date();
 		let day = d.getDay();

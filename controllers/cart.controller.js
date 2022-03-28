@@ -105,7 +105,7 @@ function cartController() {
 			const { cart } = req.session;
 			let id = req.body.id;
 			cart.items[id].note = req.body.note;
-			console.log(req.session.cart);
+			// console.log(req.session.cart);
 			return res.redirect('/cart');
 		},		
 		updateTotal(req, res) {

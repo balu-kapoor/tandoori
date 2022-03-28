@@ -292,7 +292,7 @@ const getCheckoutSuccess = async(req, res, next) => {
             
         let deliveryAmount = 0;
         let order_type = 'PICKUP';
-        console.log(req.session.order.orderType);
+        // console.log(req.session.order.orderType);
         if(req.session.order.orderType === 'DELIVERY'){
             deliveryAmount = req.session.cart.shippingCharge;
             order_type = 'DELIVERY';
@@ -380,7 +380,7 @@ const getCheckoutSuccess = async(req, res, next) => {
 					<tr><td><strong>Total Quantity</strong></td><td>${t_q}</td><td></td></tr>
 					<tr><td><strong>Shipping Charges</strong></td><td>${req.session.cart.shippingCharge}</td><td></td></tr>
 					`;
-					console.log(req.body)
+					// console.log(req.body)
 					try {						
 						const transporter = nodemailer.createTransport({
                             host: "smtp.gmail.com",
