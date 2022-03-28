@@ -681,12 +681,12 @@ PAGE JS
 		}
 	});
 
-	const now = new Date().getHours()
+	const now = new Date().getHours();
 	const d = new Date();
 	let day = d.getDay();
 
 	if (!(now >= 17 && now <= 21) || (day == 1 || day== 2)) {
-		$('.chackout_asap').remove();
+		// $('.chackout_asap').remove();
 	}	
 	  
 })(jQuery);

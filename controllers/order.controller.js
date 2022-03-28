@@ -93,11 +93,15 @@ function orderController(){
 			var deliveryTiming = year+"-"+month+"-"+day+" "+dateObj.getUTCHours()+":"+dateObj.getUTCMinutes()+":"+dateObj.getUTCSeconds()+"."+Math.floor(100000 + Math.random() * 900000);
 			let status = 'NEW COMING';
 			if(advance_order) {
+				req.session.advance_order = advance_order;
+				req.session.advance_date = advance_date;
+				req.session.advance_time = advance_time;
+
 				status = 'ADVANCE PENDING';
 				let timestamp = Date.parse(advance_date);
 				let dateObject = new Date(timestamp); 
 				month = dateObject.getUTCMonth() + 1; //months from 1-12
-				day = dateObject.getUTCDate();
+				day = dateObject.getUTCDate() + 1;
 				year = dateObject.getUTCFullYear();
 				deliveryTiming = year+"-"+month+"-"+day+" "+advance_time+":00"+"."+Math.floor(100000 + Math.random() * 900000);
 			}

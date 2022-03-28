@@ -228,7 +228,9 @@ const orderConfirm2 = async(req, res, next) => {
 
 const getCheckoutSuccess = async(req, res, next) => {
     try {
-        const {name, mobileNumber, email, address,ordertype, advance_date, advance_time,advance_order } = req.body;
+        const {name, mobileNumber, email, address,ordertype } = req.body;
+        req.session.advance_time = advance_time;
+        const advance_order = req.session.advance_order;
         
         var dateObj = new Date();
         var month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -237,11 +239,13 @@ const getCheckoutSuccess = async(req, res, next) => {
         var deliveryTiming = year+"-"+month+"-"+day+" "+dateObj.getUTCHours()+":"+dateObj.getUTCMinutes()+":"+dateObj.getUTCSeconds()+"."+Math.floor(100000 + Math.random() * 900000);
         let status = 'NEW COMING';
         if(advance_order) {
+            const advance_date = req.session.advance_date;
+            const advance_time = req.session.advance_time;
             status = 'ADVANCE PENDING';
             let timestamp = Date.parse(advance_date);
             let dateObject = new Date(timestamp); 
             month = dateObject.getUTCMonth() + 1; //months from 1-12
-            day = dateObject.getUTCDate();
+            day = dateObject.getUTCDate() + 1;
             year = dateObject.getUTCFullYear();
             deliveryTiming = year+"-"+month+"-"+day+" "+advance_time+":00"+"."+Math.floor(100000 + Math.random() * 900000);
         }
@@ -399,6 +403,10 @@ const getCheckoutSuccess = async(req, res, next) => {
 					}
 
         delete req.session.cart;
+        delete req.session.advance_order;
+        delete req.session.advance_date;
+        delete req.session.advance_time;
+
         res.clearCookie("tableNumber");
         
         if(table_number) {
