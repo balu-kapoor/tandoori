@@ -26706,7 +26706,7 @@ getdelivery  =  function(e, val) {
                         layout: 'topRight',
                         timeout: 7000,
                         theme: 'relax',
-                        text: 'You will get confirmation of your table booking through email/sms notification',
+                        text: 'Thank you for your Table Reservation.                        Once your Booking is confirmed. You will receive a confirmation email/SMS',
                         progressBar: false
                         }).show();
                         name.value= '';
