@@ -287,8 +287,8 @@ email:email,
                             ecure: false, // true for 587, false for other ports
                             requireTLS: true,
                             auth: {
-                                user: "thetandooribistro@gmail.com",
-                                pass: "TandooriBistro0993@"
+                                user: 'tandooribistroau@gmail.com',
+                				pass: 'MIllendon123@TB'
                             }
 						})
 						const mailOptions = {

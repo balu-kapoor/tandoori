@@ -26704,9 +26704,9 @@ getdelivery  =  function(e, val) {
                         new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        timeout: 1000,
+                        timeout: 7000,
                         theme: 'relax',
-                        text: 'You will get confirmation of your table booking through email/notification',
+                        text: 'You will get confirmation of your table booking through email/sms notification',
                         progressBar: false
                         }).show();
                         name.value= '';

@@ -17,18 +17,18 @@
 			<div class="col-md-12">
 
 				<div class="scrollmenu">					
-						<a href="#1">TANDOORI DELIGHTS</a>									
-						<a href="#2">APPETIZERS</a>									
-						<a href="#3">TANDOORI PIZZAS</a>									
-						<a href="#4">DELICIOUS CURRIES</a>									
-						<a href="#5">NAAN BREAD</a>									
-						<a href="#6">WHOLEMEAL BREADS</a>									
-						<a href="#7">RICE & BIRYANI</a>									
-						<a href="#8">KIDS MENU</a>									
-						<a href="#9">SIDES</a>									
-						<a href="#10">DESSERTS</a>									
-						<a href="#11">DRINKS</a>									
-				  </div>
+					<a href="#DELIGHTS">TANDOORI DELIGHTS</a>								
+					<a href="#APPETIZERS">APPETIZERS</a>									
+					<a href="#PIZZAS">TANDOORI PIZZAS</a>									
+					<a href="#CURRIES">DELICIOUS CURRIES</a>								
+					<a href="#BREAD">NAAN BREAD</a>									
+					<a href="#BREADS">WHOLEMEAL BREADS</a>									
+					<a href="#BIRYANI">RICE & BIRYANI</a>									
+					<a href="#MENU">KIDS MENU</a>									
+					<a href="#SIDES">SIDES</a>									
+					<a href="#DESSERTS">DESSERTS</a>									
+					<a href="#DRINKS">DRINKS</a>									
+			  	</div>
 			 
 			</div>
 			</div>
@@ -40,8 +40,10 @@
 	<div data-spy="scroll" data-target="#list-example" data-offset="100" class="scrollspy-example products__list">
 		<% let product_count=1; %> 
 		<% for(let cat of category) {%>
-		
-		<div class="page-section" id="<%= product_count++ %>">
+			<%   
+			var n = cat.split(" ");			
+		%>
+		<div class="page-section" id="<%= n[n.length - 1] %>">
 		<h5><%= cat %></h5>
 		<div class="row">
 			<% for (let fmly of familyPack) { %>

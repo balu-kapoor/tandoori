@@ -388,10 +388,11 @@ const getCheckoutSuccess = async(req, res, next) => {
                             ecure: false, // true for 587, false for other ports
                             requireTLS: true,
                             auth: {
-                                user: "thetandooribistro@gmail.com",
-                                pass: "TandooriBistro0993@"
+                                user: 'tandooribistroau@gmail.com',
+                                pass: 'MIllendon123@TB'
                             }
 						})
+                        
 						const mailOptions = {
 							from: 'thetandooribistro@gmail.com',
 							to: req.body.email,
@@ -495,13 +496,13 @@ const postContact = async (req, res, next) => {
             ecure: false, // true for 587, false for other ports
             requireTLS: true,
             auth: {
-                user: "thetandooribistro@gmail.com",
-                pass: "TandooriBistro0993@"
+                user: 'tandooribistroau@gmail.com',
+                pass: 'MIllendon123@TB'
             }
         })
         const mailOptions = {
             from: req.body.contact_email,
-            to: 'thetandooribistro@gmail.com',
+            to: 'brkapoor11@gmail.com',
             subject: `Message from ${req.body.contact_email}:  Contact Us`,
             text:req.body.contact_message,
             html: `
