@@ -26794,7 +26794,7 @@ getdelivery  =  function(e, val) {
 				layout: 'topRight',
 				timeout: 1000,
 				theme: 'relax',
-				text: 'We are closed for now.',
+				text: 'We are closed now.',
 				progressBar: false
 			}).show();
 			return false;
