@@ -241,16 +241,20 @@ const orderConfirm2 = async(req, res, next) => {
 const getCheckoutSuccess = async(req, res, next) => {
     try {
         const {name, mobileNumber, email, address,ordertype } = req.body;
-        req.session.advance_time = advance_time;
-        const advance_order = req.session.advance_order;
-        
+        let advance_order = 'NO';
+        if(req.body.advance_order) {
+            let advance_date =  req.body.advance_date;
+            let advance_time = req.body.advance_time;
+            advance_order = req.body.advance_order;
+        }
+
         var dateObj = new Date();
         var month = dateObj.getUTCMonth() + 1; //months from 1-12
         var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
         var deliveryTiming = year+"-"+month+"-"+day+" "+dateObj.getUTCHours()+":"+dateObj.getUTCMinutes()+":"+dateObj.getUTCSeconds()+"."+Math.floor(100000 + Math.random() * 900000);
         let status = 'NEW COMING';
-        if(advance_order == true) {
+        if(advance_order == 'YES') {
             const advance_date = req.session.advance_date;
             const advance_time = req.session.advance_time;
             status = 'ADVANCE PENDING';
@@ -502,7 +506,7 @@ const postContact = async (req, res, next) => {
         })
         const mailOptions = {
             from: req.body.contact_email,
-            to: 'brkapoor11@gmail.com',
+            to: 'thetandooribistro@gmail.com',
             subject: `Message from ${req.body.contact_email}:  Contact Us`,
             text:req.body.contact_message,
             html: `

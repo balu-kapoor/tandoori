@@ -85,14 +85,22 @@ function orderController(){
 			
 			let userEntity = {};
 			// Validate request
-			const {name, mobileNumber, email, address,city,postcode,ordertype,pickupType,shippingCharge, advance_date, advance_time,advance_order } = req.body;
+			const {name, mobileNumber, email, address,city,postcode,ordertype,pickupType,shippingCharge } = req.body;
+
+			let advance_order = 'NO';
+			if(req.body.advance_order) {
+				let advance_date =  req.body.advance_date;
+				let advance_time = req.body.advance_time;
+				advance_order = req.body.advance_order;
+			}
+			
 			var dateObj = new Date();
 			var month = dateObj.getUTCMonth() + 1; //months from 1-12
 			var day = dateObj.getUTCDate();
 			var year = dateObj.getUTCFullYear();
 			var deliveryTiming = year+"-"+month+"-"+day+" "+dateObj.getUTCHours()+":"+dateObj.getUTCMinutes()+":"+dateObj.getUTCSeconds()+"."+Math.floor(100000 + Math.random() * 900000);
 			let status = 'NEW COMING';
-			if(advance_order == true) {
+			if(advance_order == 'YES') {
 				req.session.advance_order = advance_order;
 				req.session.advance_date = advance_date;
 				req.session.advance_time = advance_time;
