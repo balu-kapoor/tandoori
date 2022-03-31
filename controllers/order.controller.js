@@ -88,9 +88,11 @@ function orderController(){
 			const {name, mobileNumber, email, address,city,postcode,ordertype,pickupType,shippingCharge } = req.body;
 
 			let advance_order = 'NO';
+			let advance_date = '';
+			let advance_time = '';
 			if(req.body.advance_order) {
-				let advance_date =  req.body.advance_date;
-				let advance_time = req.body.advance_time;
+				advance_date =  req.body.advance_date;
+				advance_time = req.body.advance_time;
 				advance_order = req.body.advance_order;
 			}
 			

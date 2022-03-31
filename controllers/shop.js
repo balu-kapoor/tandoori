@@ -241,10 +241,13 @@ const orderConfirm2 = async(req, res, next) => {
 const getCheckoutSuccess = async(req, res, next) => {
     try {
         const {name, mobileNumber, email, address,ordertype } = req.body;
+        
         let advance_order = 'NO';
+        let advance_date = '';
+        let advance_time = '';
         if(req.body.advance_order) {
-            let advance_date =  req.body.advance_date;
-            let advance_time = req.body.advance_time;
+            advance_date =  req.body.advance_date;
+            advance_time = req.body.advance_time;
             advance_order = req.body.advance_order;
         }
 
