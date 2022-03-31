@@ -219,7 +219,7 @@ email:email,
 						discountValue: '',
 						netAmount: totalPrice.toFixed(2)
 					})
-
+				// adding git main
 				let orderItemEntity = {};
 					for(let productId of Object.values(req.session.cart.items)) {	
 						var total = productId.item.price * productId.qty;
@@ -284,7 +284,7 @@ email:email,
 						const transporter = nodemailer.createTransport({
 							host: "smtp.gmail.com",
                             port: 587,
-                            ecure: false, // true for 587, false for other ports
+                            secure: false, // true for 587, false for other ports
                             requireTLS: true,
                             auth: {
                                 user: 'tandooribistroau@gmail.com',

@@ -385,7 +385,7 @@ const getCheckoutSuccess = async(req, res, next) => {
 						const transporter = nodemailer.createTransport({
                             host: "smtp.gmail.com",
                             port: 587,
-                            ecure: false, // true for 587, false for other ports
+                            secure: false, // true for 587, false for other ports
                             requireTLS: true,
                             auth: {
                                 user: 'tandooribistroau@gmail.com',
@@ -493,7 +493,7 @@ const postContact = async (req, res, next) => {
         const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 587,
-            ecure: false, // true for 587, false for other ports
+            secure: false, // true for 587, false for other ports
             requireTLS: true,
             auth: {
                 user: 'tandooribistroau@gmail.com',
